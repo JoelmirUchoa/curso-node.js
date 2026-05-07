@@ -18,8 +18,12 @@ async function rollDice() {
     return Math.floor(Math.random() * 6) + 1;
 };
 
-async function main() {
-    console.log("Bem-vindo ao Mario Kart!");
-}
+async function playRaceEngine(character1, character2) {}
 
-main();
+(async function main() {
+    console.log(`🏁🚨Corrida entre ${player1.nome} e ${player2.nome} começando...`
+    );
+
+    await playRaceEngine(player1, player2);
+})();
+
