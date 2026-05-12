@@ -37,7 +37,7 @@ return result;
 }
 
 async function logRollResults(characterName, block, diceResult, attribute) {
-    console.log(`${characterName} 🎲 rolou um dado de: ${block} ${diceResult1}`);
+    console.log(`${characterName} 🎲 rolou um dado de: ${block} ${diceResult} + ${attribute} = ${diceResult + attribute}`);
 }
 
 async function playRaceEngine(character1, character2) {
@@ -47,66 +47,63 @@ async function playRaceEngine(character1, character2) {
         //Sorteio do bloco
         let block = await getRandomBlock();
         console.log(`Bloco sorteado: ${block}`);
-    }
-    
-    //rolar o dado
-    let diceResult1 = await rollDice();
-    let diceResult2 = await rollDice();
 
-    //teste de habilidade
-    let totalTestSkill1 = 0;
-    let totalTestSkill2 = 0;
+        //rolar o dado
+        let diceResult1 = await rollDice();
+        let diceResult2 = await rollDice();
 
-    if (block === "RETA") {
-        diceResult1 = diceResult1 + character1.velocidade;
-        diceResult2 = diceResult2 + character2.velocidade;
+        //teste de habilidade
+        let totalTestSkill1 = 0;
+        let totalTestSkill2 = 0;
 
-        await logRollResults(
-        character1.nome, 
-        "Velocidade", 
-        diceResult1,
-        character1.velocidade
-    );
-    await logRollResults(
-        character2.nome, 
-        "Velocidade", 
-        diceResult2,
-        character2.velocidade
-    );
+        if (block === "RETA") {
+            diceResult1 = diceResult1 + character1.velocidade;
+            diceResult2 = diceResult2 + character2.velocidade;
 
-
-    }
-    if (block === "CURVA") {
-        diceResult1 = diceResult1 + character1.manobrilidade;
-        diceResult2 = diceResult2 + character2.manobrilidade;
-        await logRollResults(
+            await logRollResults(
             character1.nome, 
-            "Manobrilidade",
+            "Velocidade", 
             diceResult1,
-            character1.manobrilidade
-        );
-        await logRollResults(
-            character2.nome, 
-            "Manobrilidade",
-            diceResult2,
-            character2.manobrilidade
-        );
-    }
-    if (block === "CONFRONTO") {
-        let powerResult1 = diceResult1 + character1.poder;
-        let powerResult2 = diceResult2 + character2.poder;
-        await logRollResults(
-            character1.nome, 
-            "Poder",
-            powerResult1,
-            character1.poder
-        );
-        await logRollResults(
-            character2.nome, 
-            "Poder",
-            powerResult2,
-            character2.poder
-        );
+            character1.velocidade
+            );
+            await logRollResults(
+                character2.nome, 
+                "Velocidade", 
+                diceResult2,
+                character2.velocidade
+            );
+        }
+        if (block === "CURVA") {
+            diceResult1 = diceResult1 + character1.manobrilidade;
+            diceResult2 = diceResult2 + character2.manobrilidade;
+            await logRollResults(
+                character1.nome, 
+                "Manobrilidade",
+                diceResult1,
+                character1.manobrilidade
+            );
+            await logRollResults(
+                character2.nome, 
+                "Manobrilidade",
+                diceResult2,
+                character2.manobrilidade
+            );
+        }
+        if (block === "CONFRONTO") {
+            let powerResult1 = diceResult1 + character1.poder;
+            let powerResult2 = diceResult2 + character2.poder;
+        }
+
+        //conferindo o vencedor da rodada
+        if (totalTestSkill1 > totalTestSkill2) {
+            console.log(`${character1.nome} marcou um ponto!`);
+            character1.pontos++;
+        } else if (totalTestSkill2 > totalTestSkill1) {
+            console.log(`${character2.nome} marcou um ponto!`);
+            character2.pontos++;
+        }
+
+        console.log("-------------------------------------------");
     }
 }
 
@@ -116,4 +113,3 @@ async function playRaceEngine(character1, character2) {
 
     await playRaceEngine(player1, player2);
 })();
-
