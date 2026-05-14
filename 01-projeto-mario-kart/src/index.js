@@ -106,13 +106,15 @@ async function playRaceEngine(character1, character2) {
                     diceResult2,
                     character2.poder
                 );
-                /*if(powerResult1 > powerResult2) {
-                    if (powerResult2 > 0) {
-                        character1.pontos--;
-                    }         
-                }*/
-               character1.pontos -= powerResult2 > powerResult1 && powerResult1 > 0 ? 1 : 0;
-               character2.pontos -= powerResult1 > powerResult2 && powerResult2 > 0 ? 1 : 0;
+                //verificando o resultado do confronto
+                if (powerResult1 > powerResult2 && character2.pontos > 0 ){
+                    console.log(`${character1.nome} venceu o confronto! ${character2.nome} perdeu 1 ponto 🐢.`);
+                    character2.pontos--;
+                }
+                if (powerResult2 > powerResult1 && character1.pontos > 0){
+                    console.log(`${character2.nome} venceu o confronto! ${character1.nome} perdeu 1 ponto 🐢.`);
+                    character1.pontos--;
+                }
                console.log(character1.pontos === character2.pontos ? "Empate no confronto! Nenhum ponto perdido." : "");
         }
         //conferindo o vencedor da rodada
@@ -127,9 +129,24 @@ async function playRaceEngine(character1, character2) {
     }
 }
 
+async function declareWinner(character1, character2) {
+    console.log(`🏁🚩 Resultado final!`);
+    console.log(`${character1.nome} tem ${character1.pontos} ponto(s).`);
+    console.log(`${character2.nome} tem ${character2.pontos} ponto(s).`);
+
+    if (character1.pontos > character2.pontos) {
+        console.log(`🏆 ${character1.nome} é o vencedor!`);
+    } else if (character2.pontos > character1.pontos) {
+        console.log(`🏆 ${character2.nome} é o vencedor!`);
+    } else {
+        console.log(`🤝 Empate! Ambos os jogadores têm o mesmo número de pontos.`);
+    }
+}
+
 (async function main() {
     console.log(`🏁🚨Corrida entre ${player1.nome} e ${player2.nome} começando...`
     );
 
     await playRaceEngine(player1, player2);
+    await declareWinner(player1, player2);
 })();
