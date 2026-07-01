@@ -1,0 +1,12 @@
+[
+        { 
+            "podcastName":  "Episode 1", 
+            "description": "Description for Episode 1",
+            "categories": ["Technology", "Education"]
+        },
+        { 
+            "podcastName": "Episode 2", 
+            "description": "Description for Episode 2", 
+            "categories": ["Technology", "Entertainment", "Education"]
+        }
+]
